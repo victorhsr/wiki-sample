@@ -1,6 +1,6 @@
 #Hello! 
 
-This is another page! Also comming from our main repository! 
+This is another page! Also coming from our main repository! 
 
 # Image hosted in our repository!!
 
