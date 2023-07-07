@@ -10,18 +10,18 @@ on:
 jobs:
   # Declaring our job which is going to mirror the wiki repository with our content
   update-wiki:
-    # The job runs in an evironment that we can customize
+    # The job runs in an environment that we can customize
     runs-on: ubuntu-latest
 
-    # In order to make troubleshooting easier lets break it into multiple steps
+    # In order to make troubleshooting easier let's break it into multiple steps
     steps:
-      # Clonning the source repository
+      # Cloning the source repository
       - name: Checkout source repository
         uses: actions/checkout@v3
         with:
           path: source
 
-      # Clonning the wiki repository
+      # Cloning the wiki repository
       - name: Checkout wiki repository
         uses: actions/checkout@v3
         with:
