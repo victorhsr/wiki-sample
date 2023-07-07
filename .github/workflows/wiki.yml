@@ -1,0 +1,51 @@
+# Name of the workflow, you'll see that on GitHub Actions menu
+name: Wiki action
+
+# Defining when we're triggering the workflow
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # Declaring our job which is going to mirror the wiki repository with our content
+  update-wiki:
+    # The job runs in an evironment that we can customize
+    runs-on: ubuntu-latest
+
+    # In order to make troubleshooting easier lets break it into multiple steps
+    steps:
+      # Clonning the source repository
+      - name: Checkout source repository
+        uses: actions/checkout@v3
+        with:
+          path: source
+
+      # Clonning the wiki repository
+      - name: Checkout wiki repository
+        uses: actions/checkout@v3
+        with:
+          path: wiki
+          repository: victorhsr/wiki-sample.wiki
+          # These lines will do the trick, when it comes to access rights.
+          # At the start of each workflow run, GitHub automatically creates a unique GITHUB_TOKEN secret to use in your workflow.
+          # You can use the GITHUB_TOKEN to authenticate in a workflow run.
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
+
+      # Mirroring our documentation folder to the wiki repository
+      - name: Copy repository content
+        run: |
+          rm -rf wiki/*
+          cp -r source/documentation/* wiki
+
+      - name: Commit and push changes
+        run: |
+          cd wiki/
+          git config user.name "GitHub Actions"
+          git config user.email "<>"
+          git add .
+          if [[ -n $(git diff --cached --name-only) ]]; then
+            git commit -m "Updated from GitHub Actions"
+            git push origin master
+          fi
