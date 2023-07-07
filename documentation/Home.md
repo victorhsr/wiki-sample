@@ -1,6 +1,6 @@
 # Home! 
 
-This documentation is comming from our main repository!
+This documentation is coming from our main repository!
 
 You'll find a full sample using markdown here!
 
